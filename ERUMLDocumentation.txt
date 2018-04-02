@@ -1,0 +1,57 @@
+Procedure:
+
+#1
+1. Parsing XML Data
+2. Feature Frequency List Generation
+3. Feature Extraction
+4. Convert message to features
+5. Generation of files
+
+#2
+1. Converting train and test files for a specific author
+2. Generation of files
+
+#3
+1. Training and testing of author
+2. Outputing results to screen
+
+#4
+1. Classification of message(s)
+2. Output results to screen
+
+ELABORATION
+
+1.1 Parsing XML Data
+	This is necessary to extract the necessary fields required (Authors and Messages) from the XML Element Tree generated from the parsing. This is done using the python Element Tree module
+
+1.2 Feature Frequency List Generation
+	The messages parsed from the XML Corpus is split into its features using a map to map a certain feature to its corresponding frequency. This is done for all the messages in the file to generate the feature frequency file.
+
+1.3 Feature Extraction
+	The features from the feature frequency list is then extracted based on its occurance. The default is a feature frequency of >50 being extracted. These high occuring features are then converted into a feature vector by denoting a feature as a number (e.g. For trigrams, 'abc' will be 1, 'cde' will be 2)
+
+1.4 Converting message to features
+	Using the feature vector, the messages are once again searched through to check for presence of features. For each message, the message will be in the format [author] [feature:1] [feature2:1] [feature3:1] ... where author will be a number by generating an author vector for the authors for every feature present in the message. The features will be sorted in ascending order as required by the training and testing format.
+
+1.5 Generation of files 
+	The files containing: Author Frequency, Author List (author,number), Feature Frequency, Feature List(feature, number), messages (in raw text) and the training and testing files will be generated in the current directory 
+
+
+2.1 Converting train and test files for a specific author 
+	The author at the beginning of each line of the train and testing file will be changed into "+1" or "-1" depending on whether the author is the one specified by the user. If the author is present, it will be +1. These files can then be used for training and testing 
+
+2.2 Generation of files
+	The files are then generated in a specified directory with the names of test(author number).txt and train(author number).txt for the testing and training files of the specified author respectively
+
+
+3.1 Training and Testing of Author
+	The training and testing will be done using SVM Libraries such as svmlight using the testing and training files generated for an author
+
+3.2 Output results to screen
+	The results of the testing (Precision/Recall) will be shown on the screen for the user's reference and choice to select a different feature type
+
+
+4.1 Classification of message(s)
+	The message will be converted into a feature list based on the features file selected during the XML Parsing stage. A file can also be specified containing many messages to be tested. The classification will be run and results will be written in a file which will then be read for the determination of the author. The default threshold of determination of author is 0, which can be changed accordingly based on the results of step #3.2. If more than 1 message is present (i.e. messages in a file), the average output will be taken and checked against the threshold, which makes the results more reliable.
+
+4.2 Output results to screen
